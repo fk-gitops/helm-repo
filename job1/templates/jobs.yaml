@@ -1,18 +1,34 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: countdown
+  name: "indexed-job"
 spec:
-  completions: 1
+  completions: 5
+  parallelism: 3
   template:
-    metadata:
-      name: countdown
     spec:
-      containers:
-        - name: counter
-          image: centos:7
-          command:
-            - "bin/bash"
-            - "-c"
-            - "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; done"
       restartPolicy: Never
+      initContainers:
+        - name: "input"
+          image: "docker.io/library/bash"
+          command:
+            - "bash"
+            - "-c"
+            - |
+              items=(foo bar baz qux xyz)
+              echo ${items[$JOB_COMPLETION_INDEX]} > /input/data.txt
+          volumeMounts:
+            - mountPath: /input
+              name: input
+      containers:
+        - name: "worker"
+          image: "docker.io/library/busybox"
+          command:
+            - "rev"
+            - "/input/data.txt"
+          volumeMounts:
+            - mountPath: /input
+              name: input
+      volumes:
+        - name: input
+          emptyDir: {}
