@@ -1,18 +1,37 @@
-apiVersion: batch/v1
-kind: Job
+# apiVersion: batch/v1
+# kind: Job
+# metadata:
+#   name: countdown
+# spec:
+#   template:
+#     metadata:
+#       name: countdown
+#     spec:
+#       containers:
+#         - name: counter
+#           image: centos:7
+#           command:
+#             - "bin/bash"
+#             - "-c"
+#             - "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; done"
+#             - "abcagain"
+#       restartPolicy: Never
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: countdown
+  name: nginx-project
 spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx-project
   template:
     metadata:
-      name: countdown
+      labels:
+        app: nginx-project
     spec:
       containers:
-        - name: counter
-          image: centos:7
-          command:
-            - "bin/bash"
-            - "-c"
-            - "for i in 9 8 7 6 5 4 3 2 1 ; do echo $i ; done"
-            - "abcagain"
-      restartPolicy: Never
+        - name: nginx
+          image: nginx:1.17.3
+          ports:
+            - containerPort: 80
