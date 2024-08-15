@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "joba"
+  name: "jobb"
 spec:
   completions: 1
   parallelism: 1
@@ -14,6 +14,7 @@ spec:
           command:
             - "bash"
             - "-c"
+            - sleep 20m
             - |
               items=(foo bar baz qux xyz)
               echo ${items[$JOB_COMPLETION_INDEX]} > /input/data.txt
@@ -26,7 +27,6 @@ spec:
           command:
             - "rev"
             - "/input/data.txt"
-            # - sleep 20m
           volumeMounts:
             - mountPath: /input
               name: input
