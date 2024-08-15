@@ -28,7 +28,7 @@ spec:
             - "/input/data.txt"
           volumeMounts:
             - mountPath: /input
-              name: input
+              name: inputx
       volumes:
         - name: input
           emptyDir: {}
