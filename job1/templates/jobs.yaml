@@ -4,8 +4,6 @@ metadata:
   name: countdown
 spec:
   completions: 1
-  parallelism: 1
-  backoffLimit: 2
   template:
     metadata:
       name: countdown
