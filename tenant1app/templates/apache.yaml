@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache
+  labels:
+    name: webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: webserver
+  template:
+    metadata:
+      labels:
+        name: webserver
+    spec:
+      containers:
+        - name: apache
+          image: httpd:2.4
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
