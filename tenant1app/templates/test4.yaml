@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ["wget"]
-      args: ["http://tenant1helmrelease1-tenant1app:82"]
+      args: ["http://tenant1helmrelease1-tenant1app:83"]
   restartPolicy: Never
