@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: apache
-          image: httpd:2.4.6
+          image: httpd:2
           imagePullPolicy: Always
           ports:
             - name: http
